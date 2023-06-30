@@ -1,0 +1,50 @@
+{% extends 'SystemParking/base.html' %}
+
+{% block content %}
+<div >
+  <h1>Todos los estacionamientos</h1>
+  <div class="row">
+    {% for espacio in espacios %}
+    <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+      <div class="card {% if espacio.estadoEstacionamiento %}bg-libre{% else %}bg-ocupado{% endif %}">
+        <div class="card-header text-dark">
+          <h5 class="mb-0 ">{{ espacio.codigoIdentificativo }}</h5>
+
+        </div>
+        <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <div class="car-icon"></div>
+
+          {% if espacio.estadoEstacionamiento %}
+          <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#registrarAutoModal">Ocupar</button>
+          {% else %}
+          <a class="btn btn-primary mt-3">Ver detalles</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:4 and not forloop.last %}
+    </div>
+    <div class="row">
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .bg-libre {
+    background-color: #6296B7;
+  }
+  .bg-ocupado{
+    background-color: #bd695d
+  }
+  .car-icon {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/4682/4682932.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    height: 150px;
+    * Ajusta el tamaño del icono según sea necesario */
+  }
+</style>
+
+{% endblock %}

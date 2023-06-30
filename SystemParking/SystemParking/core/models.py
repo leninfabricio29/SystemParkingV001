@@ -45,7 +45,7 @@ class AutoEspacio (models.Model):
     auto = models.ForeignKey(Automovil, on_delete=models.CASCADE, blank=True, null=True)
     espacio = models.ForeignKey(EspacioEstacionamiento, on_delete=models.CASCADE, blank=True, null=True)
     tarifa = models.ForeignKey(Tarifa,  on_delete=models.CASCADE, blank=True, null=True)
-    horaIngreso = models.DateField(datetime.now(), blank=True)
+    horaIngreso = models.DateField(datetime.now(), blank=True, null=True)
 
     def __str__(self):
         return self.auto.placa
