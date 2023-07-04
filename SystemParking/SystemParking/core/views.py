@@ -1,10 +1,9 @@
 
 from django.shortcuts import render, redirect
-from .forms import AutoEspacioForm, TarifaForm, EspacioForm
-from .models import EspacioEstacionamiento
+from .forms import AutoEspacioForm, TarifaForm, EspacioForm, IngresoForm, EgresoForm
+from .models import EspacioEstacionamiento,Ingreso
 from django.contrib import messages
-
-
+from datetime import date
 
 
 def home_view (request):
@@ -13,6 +12,7 @@ def home_view (request):
         'espacios' : espacios
     }
     return render(request,'SystemParking/estacionamientos.html',contexto)
+
 
 def registro_auto_espacio(request):
     if request.method == 'POST':
@@ -56,6 +56,7 @@ def registro_tarifa (request):
 
     return render(request,'SystemParking/nueva-tarifa.html',context)
 
+
 def registro_espacio (request):
     if request.method == 'POST':
         form = EspacioForm(request.POST)
@@ -71,3 +72,27 @@ def registro_espacio (request):
     }
 
     return render(request,'SystemParking/nuevo-espacio.html',context)
+
+
+def view_contable_home(request):
+    ingresos = Ingreso.objects.all()
+    contexto={
+        'ingresos': ingresos
+    }
+
+    return render(request,'SystemParking/contable-home.html',contexto)
+
+
+def registro_ingreso(request):
+    if request.method == 'POST':
+        form = IngresoForm(request.POST)
+        if form.is_valid():
+            ingreso = form.save(commit=False)  # Guardar el formulario sin guardar en la base de datos
+            ingreso.fechaCreacion = date.today()  # Asignar la fecha actual al campo fechaCreacion
+            ingreso.save()  # Guardar el objeto ingreso en la base de datos
+            messages.success(request,'Registro exitoso')
+            return redirect('page-contable')  # Redireccionar a una página exitosa después de guardar los datos
+    else:
+        form = IngresoForm()
+
+    return render(request, 'SystemParking/nuevo-ingreso.html', {'form': form})

@@ -1,0 +1,135 @@
+{% extends 'SystemParking/base.html' %}
+
+{% block  content %}
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col">
+            <div class="container border round  ">
+
+                <h5 class="text-center mt-4">Todos los ingresos del 03 Julio 2023</h5>
+
+
+
+
+                <div class="d-flex flex-row-reverse between">
+
+                    <button type="button" class="btn btn-info ml-2" onclick="modal_nuevo('{% url 'page-ingreso' %}')"> <i class="fas fa-plus"></i> Nuevo</button>
+                    <button type="button" class="btn btn-secondary "> <i class="fas fa-print"></i> Imprimir </button>
+
+
+                </div>
+                <div class="container mt-4">
+                                    <div class="card shadow mb-4 mr-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Todos los ingresos</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table1 table-bordered " id="example" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th> Descripcion</th>
+                                            <th>Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in ingresos %}
+                                        <tr>
+                                            <td>{{item.fechaCreacion}}</td>
+                                            <td>{{item.descripcion}}</td>
+                                            <td>{{item.monto}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="container border round  ">
+
+                <h5 class="text-center mt-4">Todos los egresos del 03 Julio 2023</h5>
+
+
+
+
+                <div class="d-flex flex-row-reverse between">
+
+                    <button type="button" class="btn btn-info ml-2"> <i class="fas fa-plus"></i> Nuevo</button>
+                    <button type="button" class="btn btn-secondary "> <i class="fas fa-print"></i>
+ Imprimir</button>
+
+
+
+
+                </div>
+                <div class="container mt-4">
+                                    <div class="card shadow mb-4 mr-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Todos los egresos</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="tabla2 table-bordered " id="tableEgresos" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Codigo Identificativo</th>
+                                            <th> Estado</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in espacios %}
+                                        <tr>
+                                            <td>{{item.codigoIdentificativo}}</td>
+
+                                           {% if item.estadoEstacionamiento %}
+    <td>Libre</td>
+{% else %}
+    <td>Ocupado</td>
+{% endif %}
+
+                                              <td>
+                                                <div class="text-center">
+                                                    <i class="fa fa-edit text-success"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="nuevoModal" role="dialog">
+
+</div>
+
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function modal_nuevo(url){
+        $('#nuevoModal').load(url,function(){
+            $(this).modal('show');
+        });
+    }
+
+</script>
+{% endblock extrajs %}
+

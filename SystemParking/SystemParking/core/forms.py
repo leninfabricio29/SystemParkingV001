@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.timezone import datetime
-from .models import AutoEspacio, Automovil, Tarifa, EspacioEstacionamiento
+from .models import AutoEspacio, Automovil, Tarifa, EspacioEstacionamiento, Ingreso, Egreso
 
 class AutoEspacioForm(forms.ModelForm):
     placa = forms.CharField(max_length=10)
@@ -35,3 +35,20 @@ class EspacioForm(forms.ModelForm):
     class Meta:
         model = EspacioEstacionamiento
         fields = ('codigoIdentificativo','estadoEstacionamiento')
+
+
+class IngresoForm(forms.ModelForm):
+    descripcion = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ingresa la descripción','class':'form-control','autocomplete': 'off'}))
+    monto = forms.DecimalField(widget=forms.NumberInput(attrs={'step': '0.01','placeholder': 'Total del monto','class':'form-control small'}))
+    class Meta:
+        model = Ingreso
+        fields = ('monto','descripcion')
+        exclude = ['fechaCreacion']
+
+
+class EgresoForm(forms.ModelForm):
+    class Meta:
+        model = Ingreso
+        fields = ('monto', 'descripcion', 'fechaCreacion')
+
+

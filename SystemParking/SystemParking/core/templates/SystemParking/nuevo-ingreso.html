@@ -1,0 +1,82 @@
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-dark">Registra un nuevo ingreso </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="container-fluid">
+              <form id="formulario" method="POST" action="{% url 'page-ingreso' %}">
+
+    {% csrf_token %}
+                  <div class="alert alert-warning p-2 mb-4 text-dark">
+    <i class="fas fa-exclamation-triangle"></i> <!-- Icono de warning -->
+                                                              <spam > Para registrar un nuevo ingreso debes proporcionar una descripcion, posteriormente el monto.</spam>
+
+                  </div>
+
+{% if messages %}
+  <div class="alert alert-success text-center d-none" role="alert">
+          <i class="fas fa-check-circle"></i> <!-- Icono de check -->
+
+    {% for message in messages %}
+      <span>{{ message }}</span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+                  <div class="text-center">
+                      <div class="row">
+                          <div class="col">
+                              <div class="form-group">
+                               {{form.descripcion}}
+
+
+                              </div>
+                          </div>
+                           <div class="col">
+                              <div class="form-group">
+                                                        {{form.monto}}
+
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+ <div class="modal-footer">
+        <button id="guardarBtn" type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+      </div>
+          </form>
+          </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <script>
+      $(document).ready(function() {
+  $('#guardarBtn').click(function(e) {
+    e.preventDefault(); // Evita el envío del formulario por defecto
+
+    // Muestra la alerta
+    $('.alert-success').removeClass('d-none');
+    setTimeout(function() {
+      $('.alert-success').addClass('d-none');
+    }, 3000); // Oculta la alerta después de 3 segundos (puedes ajustar este tiempo según tus necesidades)
+
+    // Envía el formulario después de mostrar la alerta
+    setTimeout(function() {
+      $('#formulario').submit();
+    }, 700);
+  });
+});
+
+  </script>

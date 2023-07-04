@@ -51,5 +51,20 @@ class AutoEspacio (models.Model):
         return self.auto.placa
 
 
+class Ingreso (models.Model):
+    monto = models.DecimalField(max_digits=4, decimal_places=2, blank=True)
+    descripcion = models.CharField(max_length=450)
+    fechaCreacion = models.DateField(datetime.now())
+
+    def __str__(self):
+        return self.descripcion
+
+
+class Egreso (models.Model):
+    monto = models.DecimalField(max_digits=4, decimal_places=2, blank=True)
+    descripcion = models.CharField(max_length=450)
+    fechaCreacion = models.DateField(datetime.now())
+
+
 
 
